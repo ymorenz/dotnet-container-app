@@ -21,7 +21,7 @@ param osDiskSizeGB int = 0
 param agentCount int = 1
 
 @description('The size of the Virtual Machine.')
-param agentVMSize string = 'Standard_D2_v2'
+param agentVMSize string = 'Standard_B2s'
 
 var logAnalyticsName = toLower('log-${clusterName}')
 
@@ -39,6 +39,10 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-03
 resource aks 'Microsoft.ContainerService/managedClusters@2020-09-01' = {
   name: clusterName
   location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Free'
+  }
   identity: {
     type: 'SystemAssigned'
   }
